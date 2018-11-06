@@ -33,7 +33,6 @@ class UserProvider implements BaseUserProvider
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
-        throw new Exception('Unimplemented.');
     }
 
     /**

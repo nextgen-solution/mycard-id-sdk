@@ -1,6 +1,6 @@
 <?php
 
-namespace MyCard\ID;
+namespace NextgenSolution\MyCardIDSDK;
 
 use SocialiteProviders\Manager\SocialiteWasCalled;
 

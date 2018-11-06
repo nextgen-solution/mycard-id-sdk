@@ -1,6 +1,6 @@
 <?php
 
-namespace MyCard\ID;
+namespace NextgenSolution\MyCardIDSDK;
 
 use Laravel\Socialite\Two\ProviderInterface;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;

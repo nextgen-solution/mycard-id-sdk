@@ -1,6 +1,6 @@
 <?php
 
-namespace MyCard\ID;
+namespace NextgenSolution\MyCardIDSDK;
 
 use Illuminate\Contracts\Auth\UserProvider as BaseUserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;

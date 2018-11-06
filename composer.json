@@ -11,13 +11,13 @@
     },
     "autoload": {
         "psr-4": {
-            "MyCard\\ID\\": "src/"
+            "NextgenSolution\\MyCardIDSDK\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "MyCard\\ID\\ServiceProvider"
+                "NextgenSolution\\MyCardIDSDK\\ServiceProvider"
             ]
         }
     }

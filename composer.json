@@ -1,0 +1,24 @@
+{
+    "name": "mycard/id",
+    "description": "",
+    "license": "MIT",
+    "authors": [{
+        "name": "Tetat Jearuksuwan",
+        "email": "tetat.j@ngs.in.th"
+    }],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "MyCard\\ID\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MyCard\\ID\\ServiceProvider"
+            ]
+        }
+    }
+}

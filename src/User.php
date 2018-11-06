@@ -64,7 +64,6 @@ class User implements Authenticatable
      */
     public function setRememberToken($value)
     {
-        throw new Exception('Unimplemented.');
     }
 
     /**

@@ -25,7 +25,7 @@ class SocialiteProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://auth.mycard.in.th/oauth/authorize', $state);
+        return $this->buildAuthUrlFromBase('https://id.mycard.in.th/oauth/authorize', $state);
     }
 
     /**
@@ -33,7 +33,7 @@ class SocialiteProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return 'https://auth.mycard.in.th/oauth/token';
+        return 'https://id.mycard.in.th/oauth/token';
     }
 
     /**
@@ -41,7 +41,7 @@ class SocialiteProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('https://id-api.mycard.in.th/v1/me', [
+        $response = $this->getHttpClient()->get('https://id.mycard.in.th/api/v1/me', [
             'headers' => [
                 'Authorization' => 'Bearer '.$token,
             ],

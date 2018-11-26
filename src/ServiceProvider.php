@@ -16,7 +16,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->singleton(Service::class, function ($app) {
-            return new Service(new Client(), config('services.mycard'));
+            return new Service(new Client());
         });
 
         Auth::provider('mycard', function ($app) {

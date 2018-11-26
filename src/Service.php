@@ -6,19 +6,11 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use RuntimeException;
 
 class Service
 {
-    /**
-     * Define config key name.
-     */
-    const CONFIG_KEY_API_URL = 'api_url';
-    const CONFIG_KEY_AUTH_URL = 'auth_url';
-    const CONFIG_KEY_CLIENT_ID = 'client_id';
-    const CONFIG_KEY_CLIENT_SECRET = 'client_secret';
-    const CONFIG_KEY_REDIRECT = 'redirect';
-
     /**
      * Guzzle instance.
      *
@@ -27,21 +19,13 @@ class Service
     protected $guzzle;
 
     /**
-     * Configuration array.
-     *
-     * @var array
-     */
-    protected $config;
-
-    /**
      * Create a new MyCard instance.
      *
-     * @param array $config
+     * @param Client $guzzle
      */
-    public function __construct(Client $guzzle, array $config)
+    public function __construct(Client $guzzle)
     {
         $this->guzzle = $guzzle;
-        $this->config = $config;
     }
 
     /**
@@ -54,8 +38,8 @@ class Service
     {
         return $this->fetchToken(
             'client_credentials',
-            $this->getConfig(self::CONFIG_KEY_CLIENT_ID),
-            $this->getConfig(self::CONFIG_KEY_CLIENT_SECRET),
+            Config::get('services.mycard.client_id'),
+            Config::get('services.mycard.client_secret'),
             $scopes
         );
     }
@@ -70,8 +54,8 @@ class Service
     {
         $this->revokeToken(
             'client_credentials',
-            $this->getConfig(self::CONFIG_KEY_CLIENT_ID),
-            $this->getConfig(self::CONFIG_KEY_CLIENT_SECRET),
+            Config::get('services.mycard.client_id'),
+            Config::get('services.mycard.client_secret'),
             $scopes
         );
     }
@@ -84,7 +68,7 @@ class Service
      */
     public function viewProfile($token)
     {
-        $url = $this->getConfig(self::CONFIG_KEY_API_URL) . '/v1/me';
+        $url = Config::get('services.mycard.api_url') . '/v1/me';
         $headers = [
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . $token,
@@ -111,7 +95,7 @@ class Service
      * @param array $extra
      * @return string
      */
-    private function fetchToken($grantType, $clientID, $clientSecret, $scope, array $extra = [])
+    private function fetchToken($grantType, $clientID, $clientSecret, $scope = '', array $extra = [])
     {
         $name = $this->generateCacheName(__METHOD__, func_get_args());
 
@@ -135,7 +119,7 @@ class Service
      * @param array $extra
      * @return void
      */
-    private function revokeToken($grantType, $clientID, $clientSecret, $scope, array $extra = [])
+    private function revokeToken($grantType, $clientID, $clientSecret, $scope = '', array $extra = [])
     {
         $name = $this->generateCacheName(__METHOD__, func_get_args());
 
@@ -152,9 +136,9 @@ class Service
      * @param array $extra
      * @return array
      */
-    private function requestToken($grantType, $clientID, $clientSecret, $scope, array $extra = [])
+    private function requestToken($grantType, $clientID, $clientSecret, $scope = '', array $extra = [])
     {
-        $url = $this->getConfig(self::CONFIG_KEY_AUTH_URL) . '/oauth/token';
+        $url = Config::get('services.mycard.auth_url') . '/oauth/token';
         $headers = [
             'Accept' => 'application/json',
         ];
@@ -186,16 +170,5 @@ class Service
     private function generateCacheName(...$data)
     {
         return md5(json_encode($data));
-    }
-
-    /**
-     * Get config value by key.
-     *
-     * @param string $key
-     * @return mixed
-     */
-    private function getConfig($key)
-    {
-        return $this->config[$key];
     }
 }

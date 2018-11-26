@@ -2,11 +2,10 @@
 
 namespace NextgenSolution\MyCardIDSDK;
 
+use Illuminate\Support\Facades\Config;
 use Laravel\Socialite\Two\ProviderInterface;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
-use Illuminate\Contracts\Auth\UserProvider;
-use Illuminate\Contracts\Auth\Authenticatable;
 
 class SocialiteProvider extends AbstractProvider implements ProviderInterface
 {
@@ -25,7 +24,7 @@ class SocialiteProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://id.mycard.in.th/oauth/authorize', $state);
+        return $this->buildAuthUrlFromBase(Config::get('services.mycard.auth_url') . '/oauth/authorize', $state);
     }
 
     /**
@@ -33,7 +32,7 @@ class SocialiteProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return 'https://id.mycard.in.th/oauth/token';
+        return Config::get('services.mycard.auth_url') . '/oauth/token';
     }
 
     /**
@@ -41,9 +40,9 @@ class SocialiteProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('https://id.mycard.in.th/api/v1/me', [
+        $response = $this->getHttpClient()->get(Config::get('services.mycard.api_url') . '/v1/me', [
             'headers' => [
-                'Authorization' => 'Bearer '.$token,
+                'Authorization' => 'Bearer ' . $token,
             ],
         ]);
 
@@ -56,11 +55,11 @@ class SocialiteProvider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id'       => $user['id'],
-            'nickname' => null,
-            'name'     => $user['full_name'] ?? null,
-            'email'    => $user['email'] ?? null,
-            'avatar'   => empty($user['email']) ? null : 'https://www.gravatar.com/avatar/'.md5(strtolower($user['email'])),
+            'id' => $user['id'],
+            'nickname' => $user['display_name'] ?? null,
+            'name' => $user['full_name'] ?? null,
+            'email' => $user['email'] ?? null,
+            'avatar' => $user['avatar_url'] ?? null,
         ]);
     }
 
@@ -70,7 +69,7 @@ class SocialiteProvider extends AbstractProvider implements ProviderInterface
     protected function getTokenFields($code)
     {
         return array_merge(parent::getTokenFields($code), [
-            'grant_type' => 'authorization_code'
+            'grant_type' => 'authorization_code',
         ]);
     }
 }

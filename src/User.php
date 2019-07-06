@@ -48,7 +48,7 @@ class User implements Authenticatable
      */
     public function getAuthPassword()
     {
-        throw new Exception('Unimplemented.');
+        // throw new Exception('Unimplemented.');
     }
 
     /**
@@ -56,7 +56,7 @@ class User implements Authenticatable
      */
     public function getRememberToken()
     {
-        throw new Exception('Unimplemented.');
+        // throw new Exception('Unimplemented.');
     }
 
     /**
@@ -64,6 +64,7 @@ class User implements Authenticatable
      */
     public function setRememberToken($value)
     {
+        // throw new Exception('Unimplemented.');
     }
 
     /**
@@ -71,6 +72,6 @@ class User implements Authenticatable
      */
     public function getRememberTokenName()
     {
-        throw new Exception('Unimplemented.');
+        // throw new Exception('Unimplemented.');
     }
 }

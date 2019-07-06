@@ -25,7 +25,7 @@ class UserProvider implements BaseUserProvider
      */
     public function retrieveByToken($identifier, $token)
     {
-        throw new Exception('Unimplemented.');
+        // throw new Exception('Unimplemented.');
     }
 
     /**
@@ -33,6 +33,7 @@ class UserProvider implements BaseUserProvider
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
+        // throw new Exception('Unimplemented.');
     }
 
     /**
@@ -40,7 +41,7 @@ class UserProvider implements BaseUserProvider
      */
     public function retrieveByCredentials(array $credentials)
     {
-        throw new Exception('Unimplemented.');
+        // throw new Exception('Unimplemented.');
     }
 
     /**
@@ -48,6 +49,6 @@ class UserProvider implements BaseUserProvider
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        throw new Exception('Unimplemented.');
+        // throw new Exception('Unimplemented.');
     }
 }
